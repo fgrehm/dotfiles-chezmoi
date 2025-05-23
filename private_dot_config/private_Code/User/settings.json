@@ -1,0 +1,36 @@
+{
+  "telemetry.telemetryLevel": "off",
+  "files.autoSave": "afterDelay",
+  "files.trimTrailingWhitespace": true,
+  "files.insertFinalNewline": true,
+  "editor.trimAutoWhitespace": true,
+  "git.confirmSync": false,
+  "git.autofetch": true,
+  "git.suggestSmartCommit": true,
+  "[markdown]": {
+    "editor.defaultFormatter": "DavidAnson.vscode-markdownlint"
+  },
+  "githubPullRequests.pullBranch": "never",
+  "terminal.integrated.accessibleViewPreserveCursorPosition": true,
+  "explorer.autoReveal": false,
+  "diffEditor.ignoreTrimWhitespace": false,
+  "terminal.integrated.enableMultiLinePasteWarning": false,
+  "githubPullRequests.terminalLinksHandler": "github",
+  "settingsSync.ignoredExtensions": [
+    "wingrunr21.vscode-ruby",
+    "eamodio.gitlens",
+    "shan.code-settings-sync"
+  ],
+  "terminal.integrated.cursorBlinking": true,
+  "terminal.integrated.scrollback": 50000,
+  "githubPullRequests.pushBranch": "always",
+  "editor.minimap.enabled": false,
+  "github.copilot.enable": {
+    "*": true,
+    "plaintext": false,
+    "markdown": false,
+    "scminput": false
+  },
+  "explorer.confirmDelete": false,
+  "editor.wordWrap": "off"
+}
