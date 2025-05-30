@@ -1,0 +1,10 @@
+#!/bin/bash
+
+set -e
+
+sudo apt install -y --no-install-recommends {{ range .packages.apt -}}{{ . | quote }} {{ end }}
+sudo apt autoremove -y
+
+{{ range .packages.snap -}}
+sudo snap install {{ .name | quote }}{{ with .opts }} {{ . }}{{ end }}
+{{ end -}} 

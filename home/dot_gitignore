@@ -1,0 +1,8 @@
+.DS_Store
+.svn
+*~
+.*.swp
+.*.swo
+.bundle/
+.vagrant/
+vendor/bundle

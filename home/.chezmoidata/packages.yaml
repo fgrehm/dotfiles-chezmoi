@@ -1,0 +1,31 @@
+packages:
+  apt:
+    - 'git'
+    - 'age'
+    - 'apt-transport-https'
+    - 'build-essential'
+    - 'ca-certificates'
+    - 'chromium-browser'
+    - 'curl'
+    # Flameshot is a nice step-up over the default Gnome screenshot tool
+    - 'flameshot'
+    - 'fzf'
+    # Gives you previews in the file manager when pressing space
+    - 'gnome-sushi'
+    - 'git'
+    - 'htop'
+    - 'jq'
+    - 'parallel'
+    - 'ripgrep'
+    - 'tmux'
+    - 'ubuntu-restricted-extras'
+    - 'xclip'
+    - 'zsh'
+  snap:
+    # TODO: Figure out how to make `opts` optional on the template
+    - name: 'slack'
+      opts: 
+    - name: 'spotify'
+      opts: 
+    - name: nvim
+      opts: '--classic'

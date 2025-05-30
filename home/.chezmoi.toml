@@ -1,0 +1,3 @@
+# vi: ft=toml
+[hooks.read-source-state.pre]
+  command = ".local/share/chezmoi/home/.install-1pass-cli.sh"

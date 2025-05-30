@@ -1,0 +1,38 @@
+[user]
+	email = fgrehm@gmail.com
+	name = Fabio Rehm
+	signingKey = {{ .chezmoi.homeDir}}/.ssh/id_ed25519-sign.pub
+[gpg]
+	format = ssh
+[commit]
+	gpgsign = true
+[color]
+	branch = auto
+	status = auto
+	diff = auto
+	grep = auto
+[core]
+	excludesfile = {{ .chezmoi.homeDir}}/.gitignore
+[push]
+	default = tracking
+[grep]
+	extendRegexp = true
+	lineNumber = true
+[status]
+	relativePaths = true
+	short = true
+	branch = true
+[filter "lfs"]
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
+	clean = git-lfs clean -- %f
+[diff]
+	colorMoved = zebra
+	algorithm = histogram
+[pull]
+	rebase = false
+[url "git@github.com:"]
+	insteadOf = https://github.com/
+[fetch]
+	prune = true

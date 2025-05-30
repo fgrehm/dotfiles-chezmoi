@@ -1,0 +1,14 @@
+# vi: ft=bash
+
+# User specific environment
+if ! [[ "$PATH" =~ "$HOME/.local/bin:$HOME/bin:" ]]; then
+    PATH="$HOME/.local/bin:$HOME/bin:$PATH"
+fi
+export PATH
+
+# Editor for terminal operations
+export EDITOR=nvim
+export GIT_EDITOR=nvim
+
+# Prevent spring annoyances
+export DISABLE_SPRING=true
