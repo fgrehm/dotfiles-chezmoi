@@ -1,5 +1,7 @@
 packages:
   apt:
+    # This package is available because of the `.install-1pass-cli.sh` which sets up the ap repo
+    - '1password'
     - 'git'
     - 'apt-transport-https'
     - 'build-essential'
