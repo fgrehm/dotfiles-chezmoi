@@ -1,9 +1,9 @@
 #!/bin/bash
+# vi: ft=bash
 
 set -eo pipefail
 
-# https://docs.docker.com/engine/install/ubuntu/#install-using-the-repository
-
+https://docs.docker.com/engine/install/ubuntu/#install-using-the-repository
 if $(type docker >/dev/null 2>&1); then
   exit 0
 fi
@@ -22,3 +22,12 @@ echo \
 # Install the package
 sudo apt update
 sudo apt install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin -y --no-install-recommends
+
+# Non root access https://docs.docker.com/engine/install/linux-postinstall/#manage-docker-as-a-non-root-user
+if ! $(getent group docker >/dev/null 2>&1); then
+  sudo groupadd docker
+fi
+if ! $(groups "{{ .chezmoi.username }}" | grep -q docker); then
+  sudo usermod -aG docker "{{ .chezmoi.username }}"
+  newgrp docker
+fi
