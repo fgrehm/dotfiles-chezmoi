@@ -1,10 +1,19 @@
 #!/bin/bash
+# vi: ft=bash
 
-set -e
+set -eo pipefail
 
-sudo apt install -y --no-install-recommends {{ range .packages.apt -}}{{ . | quote }} {{ end }}
+{{ $apt := .packages.base.apt -}}
+{{ if and .container .packages.container.apt }}{{ $apt = concat $apt .packages.container.apt }}{{ end -}}
+{{ if and (not .container) .packages.metal.apt }}{{ $apt = concat $apt .packages.metal.apt }}{{ end -}}
+sudo apt install -y --no-install-recommends \
+{{ join " \\\n" $apt | indent 17 }}
 sudo apt autoremove -y
+sudo apt clean
 
-{{ range .packages.snap -}}
+{{ $snap := .packages.base.snap -}}
+{{ if and .container .packages.container.snap }}{{ $snap = concat $snap .packages.container.snap }}{{ end -}}
+{{ if and (not .container) .packages.metal.snap }}{{ $snap = concat $snap .packages.metal.snap }}{{ end -}}
+{{ range $snap -}}
 sudo snap install {{ .name | quote }}{{ with .opts }} {{ . }}{{ end }}
 {{ end -}} 
