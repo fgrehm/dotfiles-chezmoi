@@ -22,6 +22,9 @@ packages:
     - 'ubuntu-restricted-extras'
     - 'xclip'
     - 'zsh'
+    # Install luarocks and tree-sitter-cli to resolve lazyvim :checkhealth warnings
+    - 'luarocks'
+    - 'tree-sitter-cli'
   snap:
     # TODO: Figure out how to make `opts` optional on the template
     - name: 'slack'
