@@ -1,5 +1,6 @@
 #!/bin/bash
 
+echo 'Configuring 1password cli'
 if ! $(type op >/dev/null 2>&1); then
   # FIXME: Switch to `wget`
   sudo sh -c 'apt update && apt install curl -y'
