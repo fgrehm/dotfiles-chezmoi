@@ -1,7 +1,6 @@
 packages:
   apt:
     - 'git'
-    - 'age'
     - 'apt-transport-https'
     - 'build-essential'
     - 'ca-certificates'
@@ -24,8 +23,8 @@ packages:
   snap:
     # TODO: Figure out how to make `opts` optional on the template
     - name: 'slack'
-      opts: 
+      opts:
     - name: 'spotify'
-      opts: 
+      opts:
     - name: nvim
       opts: '--classic'
