@@ -1,9 +1,9 @@
 #!/bin/bash
+{{ if .virt.container }}exit 0{{ end }}
 
 set -eo pipefail
 
 # TODO: Convert this to `.chezmoiexternal` format
-
 # https://github.com/basecamp/omakub/blob/master/install/desktop/fonts.sh
 
 mkdir -p ~/.local/share/fonts

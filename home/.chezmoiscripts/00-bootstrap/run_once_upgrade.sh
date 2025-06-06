@@ -1,7 +1,6 @@
 #!/bin/bash
+{{ if .virt.container }}exit 0{{ end }}
 
 set -eo pipefail
-
-# TODO: Skip if container / VM
 
 sudo bash -c 'apt update && apt upgrade -y && apt autoremove -y && apt clean'

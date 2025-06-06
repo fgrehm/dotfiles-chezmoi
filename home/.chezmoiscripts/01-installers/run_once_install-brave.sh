@@ -1,4 +1,5 @@
 #!/bin/bash
+{{ if .virt.container }}exit 0{{ end }}
 
 set -eo pipefail
 
