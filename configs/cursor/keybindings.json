@@ -24,5 +24,15 @@
   {
     "key": "ctrl+i",
     "command": "composerMode.agent"
+  },
+  {
+    "key": "ctrl+shift+b",
+    "command": "-workbench.view.backgroundAgent",
+    "when": "viewContainer.workbench.view.backgroundAgent.enabled"
+  },
+  {
+    "key": "ctrl+shift+b",
+    "command": "-workbench.action.tasks.build",
+    "when": "taskCommandsRegistered"
   }
 ]

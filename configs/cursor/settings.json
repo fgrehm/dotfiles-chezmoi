@@ -36,6 +36,7 @@
   "terminal.integrated.enableMultiLinePasteWarning": "auto",
   "terminal.integrated.scrollback": 50000,
   "terminal.integrated.showExitAlert": false,
+  "workbench.colorTheme": "Cursor Dark",
   "window.commandCenter": true,
-  "workbench.colorTheme": "Cursor Dark High Contrast"
+  "debug.confirmOnExit": "always"
 }

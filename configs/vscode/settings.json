@@ -17,9 +17,11 @@
   "terminal.integrated.enableMultiLinePasteWarning": false,
   "githubPullRequests.terminalLinksHandler": "github",
   "settingsSync.ignoredExtensions": [
-    "wingrunr21.vscode-ruby",
     "eamodio.gitlens",
-    "shan.code-settings-sync"
+    "github.vscode-github-actions",
+    "shan.code-settings-sync",
+    "wingrunr21.vscode-ruby",
+    "ziyasal.vscode-open-in-github"
   ],
   "terminal.integrated.cursorBlinking": true,
   "terminal.integrated.scrollback": 50000,
