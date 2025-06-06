@@ -1,11 +1,12 @@
 # vi: ft=toml
 {{ $devcontainer := not (empty (stat "/var/devcontainer")) -}}
-[virtualization]
+[data.virt]
+  container = {{ $devcontainer }}
   devcontainer = {{ $devcontainer }}
 {{ if not $devcontainer -}}
-[onepass]
+[data.onepass]
   enabled = true
-[dropbox]
+[data.dropbox]
   enabled = true
   symlinks-root = "/home/{{ .chezmoi.username }}/Dropbox/Machines/{{ .chezmoi.hostname }}"
 {{ end -}}

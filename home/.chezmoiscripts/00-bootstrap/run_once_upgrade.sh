@@ -2,4 +2,6 @@
 
 set -eo pipefail
 
-sudo bash -c 'apt update && aptt upgrade -y && apt autoremove -y && apt clean'
+# TODO: Skip if container / VM
+
+sudo bash -c 'apt update && apt upgrade -y && apt autoremove -y && apt clean'
