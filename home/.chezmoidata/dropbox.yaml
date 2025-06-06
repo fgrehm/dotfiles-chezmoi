@@ -1,0 +1,9 @@
+dropbox:
+  symlinks:
+    - "~/Desktop"
+    - "~/Desktop"
+    - "~/Documents"
+    - "~/Downloads"
+    - "~/Pictures"
+    - "~/Videos"
+    - "~/VirtualBox VMs"

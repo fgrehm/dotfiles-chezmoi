@@ -1,0 +1,14 @@
+onepass:
+  files:
+    - read: "op://Keys/SSH/id_ed25519.pub"
+      write: "~/.ssh/id_ed25519.pub"
+      mode: 0400
+    - read: "op://Keys/SSH/id_ed25519"
+      writ: "~/.ssh/id_ed25519"
+      mode: 0400
+    - read: "op://Keys/SSH/id_ed25519-sign.pub"
+      write: "~/.ssh/id_ed25519-sign.pub"
+      mode: 0400
+    - read: "op://Keys/SSH/id_ed25519-sign"
+      write: "~/.ssh/id_ed25519-sign"
+      mode: 0400

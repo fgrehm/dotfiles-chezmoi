@@ -1,6 +1,8 @@
 #!/bin/bash
 
-if $(grep $USER /etc/passwd | grep -v -q zsh); then
+set -eo pipefail
+
+if $(grep "${USER}" /etc/passwd | grep -v -q zsh); then
   sudo usermod -s /bin/zsh "${USER}"
 fi
 

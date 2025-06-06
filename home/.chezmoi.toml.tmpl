@@ -1,5 +1,11 @@
 # vi: ft=toml
-[hooks.read-source-state.pre]
-  command = ".local/share/chezmoi/home/.install-1pass-cli.sh"
-[data]
-  container = {{ if stat "/var/devcontainer" }}true{{ else }}false{{ end }}
+{{ $devcontainer := not (empty (stat "/var/devcontainer")) -}}
+[virtualization]
+  devcontainer = {{ $devcontainer }}
+{{ if not $devcontainer -}}
+[onepass]
+  enabled = true
+[dropbox]
+  enabled = true
+  symlinks-root = "/home/{{ .chezmoi.username }}/Dropbox/Machines/{{ .chezmoi.hostname }}"
+{{ end -}}

@@ -29,6 +29,8 @@ packages:
       # Gives you previews in the file manager when pressing space
       - 'gnome-sushi'
       - 'xclip'
+      # Alacritty is a GPU-powered and highly extensible terminal. See https://alacritty.org/
+      - alacritty
     snap:
       - name: 'slack'
         opts:
