@@ -6,6 +6,7 @@ set -eo pipefail
 {{ $apt := .packages.base.apt -}}
 {{ if and .virt.container .packages.container.apt }}{{ $apt = concat $apt .packages.container.apt }}{{ end -}}
 {{ if and (not .virt.container) .packages.metal.apt }}{{ $apt = concat $apt .packages.metal.apt }}{{ end -}}
+sudo apt update
 sudo apt install -y --no-install-recommends \
 {{ join " \\\n" $apt | indent 17 }}
 sudo apt autoremove -y
