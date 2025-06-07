@@ -12,23 +12,20 @@ packages:
       - 'parallel'
       - 'ripgrep'
       - 'tmux'
-      - 'ubuntu-restricted-extras'
       - 'zsh'
     snap:
-      # TODO: Figure out how to make `opts` optional on the template
-      - name: nvim
-        opts: '--classic'
 
   metal:
     apt:
+      - 'ubuntu-restricted-extras'
+      - 'chromium-browser'
+      - 'xclip'
       # This package is available because of the `.install-1pass-cli.sh` which sets up the ap repo
       - '1password'
-      - 'chromium-browser'
       # Flameshot is a nice step-up over the default Gnome screenshot tool
       - 'flameshot'
       # Gives you previews in the file manager when pressing space
       - 'gnome-sushi'
-      - 'xclip'
       # Alacritty is a GPU-powered and highly extensible terminal. See https://alacritty.org/
       - alacritty
     snap:
@@ -36,7 +33,12 @@ packages:
         opts:
       - name: 'spotify'
         opts:
+      # TODO: Install using binaries or another way that is not a snap, do it for containers and metal
+      - name: nvim
+        opts: '--classic'
 
   container:
     apt:
+      - vim
+      - neovim
     snap:

@@ -3,10 +3,8 @@
 [data.virt]
   container = {{ $devcontainer }}
   devcontainer = {{ $devcontainer }}
-{{ if not $devcontainer -}}
 [data.onepass]
-  enabled = true
+  enabled = {{ not $devcontainer }}
 [data.dropbox]
-  enabled = true
+  enabled = {{ not $devcontainer }}
   symlinks-root = "/home/{{ .chezmoi.username }}/Dropbox/Machines/{{ .chezmoi.hostname }}"
-{{ end -}}
