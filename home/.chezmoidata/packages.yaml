@@ -14,7 +14,7 @@ packages:
       - 'ripgrep'
       - 'tmux'
       - 'zsh'
-    snap:
+    snap: []
 
   metal:
     apt:
@@ -40,4 +40,4 @@ packages:
   container:
     apt:
       - vim
-    snap:
+    snap: []
