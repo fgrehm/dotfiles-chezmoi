@@ -1,5 +1,6 @@
 {
   "[html]": { "editor.tabSize": 2 },
+  "[sass]": { "editor.tabSize": 2 },
   "[markdown]": { "editor.defaultFormatter": "vscode.markdown-language-features" },
   "[slim]": { "editor.tabSize": 2 },
   "cursor.cmdk.autoSelect": false,
@@ -33,7 +34,7 @@
   "telemetry.telemetryLevel": "off",
   "terminal.integrated.accessibleViewPreserveCursorPosition": true,
   "terminal.integrated.cursorBlinking": true,
-  "terminal.integrated.enableMultiLinePasteWarning": "auto",
+  "terminal.integrated.enableMultiLinePasteWarning": false,
   "terminal.integrated.scrollback": 50000,
   "terminal.integrated.showExitAlert": false,
   "workbench.colorTheme": "Cursor Dark",

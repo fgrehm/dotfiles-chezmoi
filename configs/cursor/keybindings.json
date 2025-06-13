@@ -4,8 +4,10 @@
   { "key": "ctrl+j", "command": "-workbench.action.togglePanel" },
   { "key": "ctrl+k f", "command": "workbench.action.quickOpen" },
   { "key": "ctrl+k g", "command": "editor.action.revealDefinition", "when": "editorHasDefinitionProvider && editorTextFocus && !isInEmbeddedEditor" },
-  { "key": "ctrl+k m", "command": "workbench.action.toggleMaximizeEditorGroup", "when": "editorPartMaximizedEditorGroup || editorPartMultipleEditorGroups" },
-  { "key": "ctrl+k shift+right", "command": "workbench.action.moveEditorToRightGroup" },
+  {
+    "key": "ctrl+k shift+right",
+    "command": "workbench.action.moveEditorToRightGroup"
+  },
   { "key": "ctrl+k w", "command": "workbench.action.closeEditorsInGroup" },
   { "key": "ctrl+l", "command": "-aichat.newchataction" },
   // https://forum.cursor.com/t/change-ctrl-l-to-ctrl-i-control-l-is-for-clear-terminal/15310/7
@@ -34,5 +36,10 @@
     "key": "ctrl+shift+b",
     "command": "-workbench.action.tasks.build",
     "when": "taskCommandsRegistered"
+  },
+  {
+    "key": "ctrl+k m",
+    "command": "workbench.action.toggleMaximizedPanel",
+    "when": "panelAlignment == 'center' || panelPosition != 'bottom' && panelPosition != 'top'"
   }
 ]
