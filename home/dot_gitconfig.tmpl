@@ -1,7 +1,7 @@
 [user]
 	email = fgrehm@gmail.com
 	name = Fabio Rehm
-	signingKey = {{ .chezmoi.homeDir}}/.ssh/id_ed25519-sign.pub
+	signingKey = ~/.ssh/id_ed25519-sign.pub
 [gpg]
 	format = ssh
 [commit]
@@ -12,7 +12,7 @@
 	diff = auto
 	grep = auto
 [core]
-	excludesfile = {{ .chezmoi.homeDir}}/.gitignore
+	excludesfile = ~/.gitignore
 [push]
 	default = tracking
 [grep]
