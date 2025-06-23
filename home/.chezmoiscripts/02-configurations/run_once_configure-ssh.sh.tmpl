@@ -2,16 +2,15 @@
 # vi: ft=bash
 {{ if .virt.container }}exit 0{{ end }}
 
-
 set -eo pipefail
-
 {{ range .onepass.files }}
-if ! [[ -f {{ .write | quote }} ]]; then
-  echo "Write "{{ .read | quote }}" to "{{ .write | quote }}
-  mkdir -p $(dirname {{ .write | quote }})
-  op read {{ .read | quote }} > {{ .write | quote }}
+target=$(realpath {{ .write }})
+if [[ -f "${target}" ]]; then
+  echo "${target} already exists"
 else
-  echo {{ .write | quote }} "already exists"
+  echo "Write {{ .read }} to ${target}"
+  mkdir -p $(dirname "${target}")
+  op read {{ .read | quote }} > "${target}"
 fi
-chmod {{ .mode }} {{ .write | quote }}
+chmod {{ .mode }} "${target}"
 {{ end }}

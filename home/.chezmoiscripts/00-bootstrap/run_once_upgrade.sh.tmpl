@@ -4,4 +4,5 @@
 
 set -eo pipefail
 
+sudo apt remove -y thunderbird*
 sudo bash -c 'apt update && apt upgrade -y && apt autoremove -y && apt clean'
