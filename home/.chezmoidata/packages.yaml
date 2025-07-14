@@ -19,11 +19,13 @@ packages:
   metal:
     apt:
       - 'chromium-browser'
-      - 'ubuntu-restricted-extras'
-      - 'xclip'
-      - 'tree-sitter-cli'
-      - 'ssh-askpass-gnome'
       - 'ssh-askpass'
+      - 'ssh-askpass-gnome'
+      - 'tree-sitter-cli'
+      - 'ubuntu-restricted-extras'
+      - 'ubuntu-restricted-extras'
+      - 'vlc'
+      - 'xclip'
       # Flameshot is a nice step-up over the default Gnome screenshot tool
       - 'flameshot'
       # Gives you previews in the file manager when pressing space
