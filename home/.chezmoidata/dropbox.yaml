@@ -1,4 +1,6 @@
 dropbox:
+  # NOT USED YET, MAKE SURE TO BACKUP EXISTING FOLDER IF HAS FILES
+  # nautilus-dropbox is the package
   symlinks:
     - "~/Desktop"
     - "~/Desktop"
