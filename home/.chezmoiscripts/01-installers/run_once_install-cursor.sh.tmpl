@@ -6,6 +6,9 @@ set -eo pipefail
 
 # Based on https://github.com/basecamp/omakub/blob/master/install/desktop/optional/app-cursor.sh
 
+# HACK: This comment was added to ensure we can update after the initial installation, for whatever reason the upgrader can't replace the app image on its own
+# Latest version: 1.2.4
+
 sudo mkdir -p /opt/cursor
 sudo cp "{{ .chezmoi.workingTree }}/assets/icons/cursor.png" /opt/cursor/icon.png
 
