@@ -91,9 +91,7 @@ jobs:
           chezmoi init --verbose --promptString "Setup type (basic/minimal/developer)"=basic
 
           # Get the actual chezmoi source directory and change to it
-          chezmoi_source=$(chezmoi source-path)
-          echo "Chezmoi source directory: $chezmoi_source"
-          cd "$chezmoi_source"
+          chezmoi cd
 
           # Test main configuration template using chezmoi's template execution
           echo "Testing main config template..."
