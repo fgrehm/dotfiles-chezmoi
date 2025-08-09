@@ -6,6 +6,7 @@ User/History/
 User/snippets/
 CachedExtensions/
 extensions/
+argv.json
 .vscode-test
 *.vsix
 *.log
