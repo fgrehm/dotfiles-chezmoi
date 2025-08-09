@@ -1,0 +1,101 @@
+{
+    "telemetry.telemetryLevel": "off",
+    "files.autoSave": "afterDelay",
+    "files.trimTrailingWhitespace": true,
+    "files.insertFinalNewline": true,
+    "editor.trimAutoWhitespace": true,
+    "git.confirmSync": false,
+    "git.autofetch": true,
+    "git.suggestSmartCommit": true,
+    "[markdown]": {
+        "editor.defaultFormatter": "DavidAnson.vscode-markdownlint"
+    },
+    "githubPullRequests.pullBranch": "never",
+    "terminal.integrated.accessibleViewPreserveCursorPosition": true,
+    "explorer.autoReveal": false,
+    "diffEditor.ignoreTrimWhitespace": false,
+    "terminal.integrated.enableMultiLinePasteWarning": false,
+    "githubPullRequests.terminalLinksHandler": "github",
+    "settingsSync.ignoredExtensions": [
+        "eamodio.gitlens",
+        "github.vscode-github-actions",
+        "shan.code-settings-sync",
+        "wingrunr21.vscode-ruby",
+        "ziyasal.vscode-open-in-github"
+    ],
+    "terminal.integrated.cursorBlinking": true,
+    "terminal.integrated.scrollback": 50000,
+    "githubPullRequests.pushBranch": "always",
+    "editor.minimap.enabled": false,
+    "github.copilot.enable": {
+        "*": true,
+        "plaintext": false,
+        "markdown": false,
+        "scminput": false
+    },
+    "explorer.confirmDelete": false,
+    "editor.wordWrap": "off",
+    "extensions.autoInstall": true,
+    "extensions.recommendations": [
+        "ms-vscode-remote.remote-containers",
+        "vscodevim.vim"
+    ],
+    "vim.easymotion": true,
+    "vim.incsearch": true,
+    "vim.useSystemClipboard": true,
+    "vim.useCtrlKeys": true,
+    "vim.hlsearch": true,
+    "vim.insertModeKeyBindings": [
+        {
+            "before": [
+                "j",
+                "j"
+            ],
+            "after": [
+                "<Esc>"
+            ]
+        }
+    ],
+    "vim.normalModeKeyBindingsNonRecursive": [
+        {
+            "before": [
+                "<leader>",
+                "d"
+            ],
+            "after": [
+                "d",
+                "d"
+            ]
+        },
+        {
+            "before": [
+                "<C-n>"
+            ],
+            "commands": [
+                ":nohl"
+            ]
+        },
+        {
+            "before": [
+                "K"
+            ],
+            "commands": [
+                "lineBreakInsert"
+            ],
+            "silent": true
+        }
+    ],
+    "vim.leader": "<space>",
+    "vim.handleKeys": {
+        "<C-a>": false,
+        "<C-f>": false
+    },
+    "extensions.experimental.affinity": {
+        "vscodevim.vim": 1
+    },
+    "cursor.cpp.disabledLanguages": [
+        "plaintext",
+        "markdown",
+        "scminput"
+    ]
+}

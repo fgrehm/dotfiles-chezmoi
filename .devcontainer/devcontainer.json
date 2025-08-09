@@ -1,0 +1,74 @@
+{
+  "name": "Chezmakase Development",
+  "image": "mcr.microsoft.com/devcontainers/base:ubuntu",
+  
+  "features": {
+    "ghcr.io/devcontainers/features/common-utils:2": {
+      "installZsh": true,
+      "configureZshAsDefaultShell": true,
+      "installOhMyZsh": false,
+      "upgradePackages": true
+    },
+    "ghcr.io/devcontainers/features/git:1": {
+      "ppa": true,
+      "version": "latest"
+    },
+    "ghcr.io/devcontainers/features/node:1": {
+      "nodeGypDependencies": true,
+      "version": "lts"
+    },
+    "ghcr.io/devcontainers/features/docker-outside-of-docker:1": {
+      "version": "latest",
+      "enableNonRootDocker": true,
+      "moby": true
+    }
+  },
+
+  "containerEnv": {
+    "TZ": "UTC"
+  },
+
+  "remoteUser": "vscode",
+
+  "postCreateCommand": ".devcontainer/setup.sh",
+
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "DavidAnson.vscode-markdownlint",
+        "timonwong.shellcheck",
+        "ms-vscode.vscode-json",
+        "redhat.vscode-yaml",
+        "GitHub.copilot",
+        "ms-azuretools.vscode-docker"
+      ],
+      "settings": {
+        "terminal.integrated.defaultProfile.linux": "zsh",
+        "terminal.integrated.profiles.linux": {
+          "zsh": {
+            "path": "/bin/zsh"
+          }
+        },
+        "shellcheck.enable": true,
+        "files.eol": "\\n",
+        "files.trimTrailingWhitespace": true,
+        "files.insertFinalNewline": true,
+        "markdownlint.config": {
+          "line-length": {
+            "line_length": 100
+          }
+        }
+      }
+    }
+  },
+
+  "forwardPorts": [3000, 8080, 8000],
+
+  "mounts": [
+    "source=/var/run/docker.sock,target=/var/run/docker.sock,type=bind"
+  ],
+
+  "runArgs": [
+    "--init"
+  ]
+}

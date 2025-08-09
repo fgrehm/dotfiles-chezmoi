@@ -1,0 +1,17 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(mkdir:*)",
+      "Bash(find:*)",
+      "Bash(grep:*)",
+      "Bash(chmod:*)",
+      "Bash(markdownlint-cli2:*)",
+      "WebFetch(domain:github.com)",
+      "Bash(./test/simulate-devcontainer.sh:*)",
+      "WebFetch(domain:www.chezmoi.io)",
+      "Bash(cp:*)",
+      "Bash(git add:*)"
+    ],
+    "deny": []
+  }
+}
