@@ -48,7 +48,7 @@ run_test_suite() {
 }
 
 show_usage() {
-    cat << EOF
+    cat << USAGE_EOF
 Usage: $0 [COMMAND]
 
 Commands:
@@ -62,7 +62,7 @@ Commands:
 Examples:
     $0 all       # Run all tests
     $0 core      # Run just core tests
-EOF
+USAGE_EOF
 }
 
 main() {

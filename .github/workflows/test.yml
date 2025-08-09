@@ -61,17 +61,8 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Run BATS tests
-        shell: bash
         run: |
-          echo "Current shell: $SHELL"
-          echo "Current PATH: $PATH"
-          echo "Script permissions:"
-          ls -la test/run-tests.sh
-          echo "Script contents (first 10 lines):"
-          head -10 test/run-tests.sh
-          echo "Running bats-setup.sh..."
           ./test/bats-setup.sh
-          echo "Running run-tests.sh..."
           ./test/run-tests.sh all
 
   integration-tests:
@@ -86,7 +77,6 @@ jobs:
           sh -c "$(curl -fsLS get.chezmoi.io)" -- -b /usr/local/bin
 
       - name: Test template execution
-        shell: bash
         run: |
           mkdir -p /home/runner/.local/share
           ln -s "$GITHUB_WORKSPACE" /home/runner/.local/share/chezmoi
@@ -134,7 +124,6 @@ jobs:
         uses: docker/setup-buildx-action@v3
 
       - name: Test playground image build
-        shell: bash
         run: |
           # Test playground script can create and build Dockerfile
           cd test
