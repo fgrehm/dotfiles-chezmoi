@@ -85,7 +85,7 @@ jobs:
         run: |
           set -x
           # Initialize chezmoi from source (this loads data files automatically)
-          chezmoi init --source "$GITHUB_WORKSPACE" --promptString "Setup type (basic/minimal/developer)"=basic
+          chezmoi init --verbose --source "$GITHUB_WORKSPACE" --promptString "Setup type (basic/minimal/developer)"=basic
 
           # Get the actual chezmoi source directory and change to it
           chezmoi_source=$(chezmoi source-path)
