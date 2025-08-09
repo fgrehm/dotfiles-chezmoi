@@ -13,15 +13,7 @@ teardown() {
 
 @test "chezmoi configuration files exist" {
     assert_file_exist "home/.chezmoi.toml.tmpl"
-    # Check if bootstrap scripts directory exists and has at least one script
-    local scripts_dir="home/.chezmoiscripts/00-bootstrap"
-    if [ -d "$scripts_dir" ]; then
-        local script_count
-        script_count=$(find "$scripts_dir" -name "*.sh.tmpl" | wc -l)
-        assert [ "$script_count" -gt 0 ]
-    else
-        skip "Bootstrap scripts directory not found"
-    fi
+    assert_file_exist "home/.chezmoiscripts/00-bootstrap/run_once_upgrade.sh.tmpl"
 }
 
 @test "shell configuration files exist" {

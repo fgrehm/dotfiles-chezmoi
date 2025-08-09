@@ -13,9 +13,9 @@ teardown() {
 
 @test "installer scripts exist and are executable" {
     local scripts_dir="home/.chezmoiscripts/01-installers"
-    
+
     assert_dir_exist "$scripts_dir"
-    
+
     for script in "$scripts_dir"/*.sh.tmpl; do
         if [ -f "$script" ]; then
             assert_file_exist "$script"
@@ -28,9 +28,9 @@ teardown() {
 
 @test "bootstrap scripts exist and are executable" {
     local scripts_dir="home/.chezmoiscripts/00-bootstrap"
-    
+
     assert_dir_exist "$scripts_dir"
-    
+
     for script in "$scripts_dir"/*.sh.tmpl; do
         if [ -f "$script" ]; then
             assert_file_exist "$script"

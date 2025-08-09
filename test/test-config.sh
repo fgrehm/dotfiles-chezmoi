@@ -1,10 +1,6 @@
 #!/bin/bash
 # Test configuration and helper functions for chezmakase BATS tests
 
-# Get the repository root
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-REPO_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
-
 # Source BATS libraries
 load "$REPO_ROOT/test/bats/bats-support/load.bash"
 load "$REPO_ROOT/test/bats/bats-assert/load.bash"
