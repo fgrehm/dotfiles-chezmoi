@@ -35,12 +35,22 @@ sh -c "$(wget -qO- get.chezmoi.io)" -- init --verbose --apply fgrehm/dotfiles-ch
 
 ### Setup Types
 
-During initialization, choose from curated profiles:
+Specify your preferred profile during initialization:
+
+```bash
+# Basic setup (default - recommended for most users)
+sh -c "$(wget -qO- get.chezmoi.io)" -- init --verbose --apply fgrehm/dotfiles-chezmoi
+
+# Minimal setup (lightweight for containers)
+sh -c "$(wget -qO- get.chezmoi.io)" -- init --verbose --apply --data setupType=minimal fgrehm/dotfiles-chezmoi
+
+# Developer setup (full environment)
+sh -c "$(wget -qO- get.chezmoi.io)" -- init --verbose --apply --data setupType=developer fgrehm/dotfiles-chezmoi
+```
 
 - **Basic**: Recommended defaults (Cursor, Neovim, Brave, development tools)
 - **Minimal**: Lightweight for containers (Neovim, CLI tools only)
 - **Developer**: Full environment (all editors, services, development tools)
-- **Custom**: Interactive selection of each component
 
 ### Component Categories
 

@@ -67,6 +67,9 @@
   {{- $_ := set $components "services" (dict "ollama" false "openwebui" false "photoprism" false "auto_start" false) -}}
 {{- end -}}
 
+[data.setup]
+  type = "{{ $setupType }}"
+
 [data.virt]
   container = {{ $devcontainer }}
   devcontainer = {{ $devcontainer }}

@@ -95,3 +95,33 @@ chezmoi add <file>
 
 - All commits made by Claude Code should end with: `🤖 Generated with Claude Code`
 - NEVER include "Co-Authored-By: Claude <noreply@anthropic.com>" in commit messages
+
+## Current Session Progress (2025-08-09)
+
+### Completed Tasks
+- ✅ Implemented comprehensive BATS testing framework with core, templates, installers, configs
+- ✅ Added GitHub Actions CI/CD pipeline with integration tests
+- ✅ Fixed all template execution issues (removed interactive prompts for CI)
+- ✅ Fixed playground Docker build (shellcheck from GitHub releases, not pip)
+- ✅ All local tests passing - ready to push branch `chezmakase-improvements`
+- ✅ Updated documentation to reflect non-interactive initialization
+- ✅ Added setupType to generated TOML for better debugging
+
+### Key Files Modified
+- `home/.chezmoi.toml.tmpl` - Removed promptChoiceOnce functions for CI compatibility, added setupType to output
+- `test/chezmoi-playground.sh` - Fixed shellcheck installation method  
+- `.github/workflows/test.yml` - Added proper chezmoi data configuration
+- `README.md` - Updated setup instructions to show `--data setupType=<type>` syntax
+- `docs/configuration-schema.md` - Updated roadmap to reflect completed setup profiles
+- Complete BATS testing infrastructure in `test/` directory
+
+### Recent Documentation Updates (Latest)
+- Fixed outdated README that mentioned interactive prompts during initialization
+- Updated setup instructions to show correct `--data setupType=<type>` usage
+- Added `[data.setup] type = "setupType"` to generated TOML for transparency
+- Users can now clearly see which profile was used via `chezmoi data`
+
+### Next Steps After Push
+- Complete Task 2.2: Optional components system (80% done)
+- Add Task 3.3: markdownlint-cli2 to development tools
+- Complete Task 4.3: Create bare metal test script (VirtualBox-based)

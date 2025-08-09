@@ -227,9 +227,9 @@ All components available based on user configuration.
 
 ### Phase 2: User Experience  
 
-1. Add interactive prompts for component selection
-2. Provide setup profiles (basic, minimal, developer)
-3. Add validation and error handling
+1. ✅ Setup profiles (basic, minimal, developer) - users specify with `--data setupType=<type>`
+2. Add validation and error handling
+3. Add component configuration UI/CLI tools
 
 ### Phase 3: Advanced Features
 
