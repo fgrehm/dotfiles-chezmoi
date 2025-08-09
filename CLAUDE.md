@@ -150,14 +150,14 @@ chezmoi init                                # Initializes user's dotfiles
 
 ## Chezmoi Setup Type Configuration
 
-### Using promptStringOnce for Interactive Setup
+### Using promptString for Interactive Setup
 
 The repository supports different setup profiles (basic, minimal, developer) using chezmoi's 
-`promptStringOnce` template function. Here's how it works:
+`promptString` template function. Here's how it works:
 
 #### Template Implementation
 ```go
-{{- $setupType := promptStringOnce . "setupType" "Setup type (basic/minimal/developer)" "basic" -}}
+{{- $setupType := promptString "Setup type (basic/minimal/developer)" "basic" -}}
 ```
 
 #### Usage Examples
@@ -170,27 +170,28 @@ chezmoi init --verbose --apply fgrehm/dotfiles-chezmoi
 
 **Non-interactive mode** (specify value):
 ```bash
-chezmoi init --promptString setupType=developer --verbose --apply fgrehm/dotfiles-chezmoi
+chezmoi init --promptString "Setup type (basic/minimal/developer)"=developer --verbose --apply fgrehm/dotfiles-chezmoi
 ```
 
 **Testing template execution**:
 ```bash
-chezmoi execute-template --init --promptString setupType=developer < home/.chezmoi.toml.tmpl
+chezmoi execute-template --init --promptString "Setup type (basic/minimal/developer)"=developer < home/.chezmoi.toml.tmpl
 ```
 
 #### Key Findings
 
 1. **`--data` flag doesn't work with `chezmoi init`** - this was our initial mistake
-2. **`promptStringOnce` is the correct function** - stores values and avoids repeated prompts
-3. **Syntax**: `promptStringOnce . "key" "prompt message" "default"`
-4. **Non-interactive**: Use `--promptString key=value` to bypass prompts  
+2. **`promptString` is the correct function** - `promptStringOnce` has bugs with `--promptString` flags
+3. **Syntax**: `promptString "prompt message" "default"` - prompt text is used as the key
+4. **Non-interactive**: Use `--promptString "prompt message"=value` to bypass prompts  
 5. **Template location**: Must be in `home/.chezmoi.toml.tmpl` (source directory)
+6. **Bug discovered**: `promptStringOnce` doesn't work with `--promptString` flags (GitHub issue #3345)
 
 #### CI Integration
 
 Update GitHub Actions to use correct syntax:
 ```yaml
-chezmoi init --source "$GITHUB_WORKSPACE" --promptString setupType=basic
+chezmoi init --source "$GITHUB_WORKSPACE" --promptString "Setup type (basic/minimal/developer)"=basic
 ```
 
 ## Current Session Progress (2025-08-09)

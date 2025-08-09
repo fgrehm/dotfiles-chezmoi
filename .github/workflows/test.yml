@@ -84,7 +84,7 @@ jobs:
       - name: Test template execution
         run: |
           # Initialize chezmoi from source (this loads data files automatically)
-          chezmoi init --source "$GITHUB_WORKSPACE" --promptString setupType=basic
+          chezmoi init --source "$GITHUB_WORKSPACE" --promptString "Setup type (basic/minimal/developer)"=basic
           
           # Get the actual chezmoi source directory and change to it
           chezmoi_source=$(chezmoi source-path)
@@ -93,7 +93,7 @@ jobs:
 
           # Test main configuration template using chezmoi's template execution
           echo "Testing main config template..."
-          chezmoi execute-template --init --promptString setupType=basic < home/.chezmoi.toml.tmpl > /dev/null
+          chezmoi execute-template --init --promptString "Setup type (basic/minimal/developer)"=basic < home/.chezmoi.toml.tmpl > /dev/null
 
           # Test key script templates using chezmoi cat which processes templates in context
           echo "Testing script templates..."
@@ -122,7 +122,7 @@ jobs:
           # Test chezmoi init from source with setupType
           temp_dir=$(mktemp -d)
           cd "$temp_dir"
-          chezmoi init --source "$GITHUB_WORKSPACE" --promptString setupType=basic
+          chezmoi init --source "$GITHUB_WORKSPACE" --promptString "Setup type (basic/minimal/developer)"=basic
           cd "$GITHUB_WORKSPACE"
           rm -rf "$temp_dir"
 
