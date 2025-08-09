@@ -1,10 +1,146 @@
 # vi: ft=toml
 {{ $devcontainer := not (empty (stat "/var/devcontainer")) -}}
+
+{{/* User preferences - prompt for component selection */}}
+{{- $setupType := promptChoiceOnce . "setupType" "Choose setup type" (list "basic" "minimal" "developer" "custom") "basic" -}}
+
+{{/* Component configuration based on setup type and environment */}}
+{{- $components := dict -}}
+
+{{/* Basic setup - recommended for most users */}}
+{{- if eq $setupType "basic" -}}
+  {{- $components = dict 
+    "editors" (dict "cursor" true "nvim" true "vscode" false)
+    "browsers" (dict "brave" true)
+    "development" (dict "docker" true "nodejs" true "claude_cli" true "shellcheck" true "markdownlint" true "virtualbox" false)
+    "services" (dict "ollama" false "openwebui" false "photoprism" false "auto_start" false)
+    "desktop" (dict "notion" true "whatsapp" true "alacritty" false) 
+    "system" (dict "fonts" true "zsh_config" true "gnome_settings" true "package_updates" true)
+    "security" (dict "onepassword" true "ssh_config" true "gpg_config" false)
+  -}}
+{{/* Minimal setup - lightweight for containers */}}
+{{- else if eq $setupType "minimal" -}}
+  {{- $components = dict
+    "editors" (dict "cursor" false "nvim" true "vscode" false)
+    "browsers" (dict "brave" false)
+    "development" (dict "docker" false "nodejs" true "claude_cli" true "shellcheck" true "markdownlint" true "virtualbox" false)
+    "services" (dict "ollama" false "openwebui" false "photoprism" false "auto_start" false)
+    "desktop" (dict "notion" false "whatsapp" false "alacritty" false)
+    "system" (dict "fonts" true "zsh_config" true "gnome_settings" false "package_updates" true)
+    "security" (dict "onepassword" false "ssh_config" true "gpg_config" false)
+  -}}
+{{/* Developer setup - full development environment */}}
+{{- else if eq $setupType "developer" -}}
+  {{- $components = dict
+    "editors" (dict "cursor" true "nvim" true "vscode" true)
+    "browsers" (dict "brave" true)
+    "development" (dict "docker" true "nodejs" true "claude_cli" true "shellcheck" true "markdownlint" true "virtualbox" true)
+    "services" (dict "ollama" true "openwebui" true "photoprism" false "auto_start" false)
+    "desktop" (dict "notion" true "whatsapp" true "alacritty" true)
+    "system" (dict "fonts" true "zsh_config" true "gnome_settings" true "package_updates" true)
+    "security" (dict "onepassword" true "ssh_config" true "gpg_config" true)
+  -}}
+{{/* Custom setup - prompt for each component */}}
+{{- else -}}
+  {{- $components = dict
+    "editors" (dict 
+      "cursor" (promptBoolOnce . "cursor" "Install Cursor IDE (AI-powered)" true)
+      "nvim" (promptBoolOnce . "nvim" "Install Neovim with LazyVim" true)
+      "vscode" (promptBoolOnce . "vscode" "Install VS Code" false)
+    )
+    "browsers" (dict
+      "brave" (promptBoolOnce . "brave" "Install Brave browser" true)
+    )
+    "development" (dict
+      "docker" (promptBoolOnce . "docker" "Install Docker" true)
+      "nodejs" (promptBoolOnce . "nodejs" "Install Node.js via NVM" true)
+      "claude_cli" (promptBoolOnce . "claude_cli" "Install Claude Code CLI" true)
+      "shellcheck" (promptBoolOnce . "shellcheck" "Install ShellCheck for bash linting" true)
+      "markdownlint" (promptBoolOnce . "markdownlint" "Install markdown linting tools" true)
+      "virtualbox" (promptBoolOnce . "virtualbox" "Install VirtualBox (bare metal only)" false)
+    )
+    "services" (dict
+      "ollama" (promptBoolOnce . "ollama" "Install Ollama LLM server" false)
+      "openwebui" (promptBoolOnce . "openwebui" "Install Open WebUI for Ollama" false)
+      "photoprism" (promptBoolOnce . "photoprism" "Install PhotoPrism photo manager" false)
+      "auto_start" (promptBoolOnce . "auto_start" "Auto-start Docker services" false)
+    )
+    "desktop" (dict
+      "notion" (promptBoolOnce . "notion" "Create Notion web app" true)
+      "whatsapp" (promptBoolOnce . "whatsapp" "Create WhatsApp web app" true)
+      "alacritty" (promptBoolOnce . "alacritty" "Install Alacritty terminal" false)
+    )
+    "system" (dict
+      "fonts" true
+      "zsh_config" true
+      "gnome_settings" (promptBoolOnce . "gnome_settings" "Configure GNOME desktop settings" true)
+      "package_updates" true
+    )
+    "security" (dict
+      "onepassword" (promptBoolOnce . "onepassword" "Install 1Password" true)
+      "ssh_config" true
+      "gpg_config" (promptBoolOnce . "gpg_config" "Configure GPG" false)
+    )
+  -}}
+{{- end -}}
+
+{{/* Environment-specific overrides */}}
+{{- if $devcontainer -}}
+  {{/* Disable container-incompatible components */}}
+  {{- $_ := set $components "desktop" (dict "notion" false "whatsapp" false "alacritty" false) -}}
+  {{- $_ := set (index $components "development") "virtualbox" false -}}
+  {{- $_ := set (index $components "development") "docker" false -}}
+  {{- $_ := set (index $components "system") "gnome_settings" false -}}
+  {{- $_ := set (index $components "security") "onepassword" false -}}
+  {{- $_ := set $components "services" (dict "ollama" false "openwebui" false "photoprism" false "auto_start" false) -}}
+{{- end -}}
+
 [data.virt]
   container = {{ $devcontainer }}
   devcontainer = {{ $devcontainer }}
+
+[data.components]
+  [data.components.editors]
+    cursor = {{ index $components.editors "cursor" }}
+    nvim = {{ index $components.editors "nvim" }}  
+    vscode = {{ index $components.editors "vscode" }}
+
+  [data.components.browsers]
+    brave = {{ index $components.browsers "brave" }}
+
+  [data.components.development]
+    docker = {{ index $components.development "docker" }}
+    nodejs = {{ index $components.development "nodejs" }}
+    claude_cli = {{ index $components.development "claude_cli" }}
+    shellcheck = {{ index $components.development "shellcheck" }}
+    markdownlint = {{ index $components.development "markdownlint" }}
+    virtualbox = {{ index $components.development "virtualbox" }}
+
+  [data.components.services]
+    ollama = {{ index $components.services "ollama" }}
+    openwebui = {{ index $components.services "openwebui" }}
+    photoprism = {{ index $components.services "photoprism" }}
+    auto_start = {{ index $components.services "auto_start" }}
+
+  [data.components.desktop]
+    notion = {{ index $components.desktop "notion" }}
+    whatsapp = {{ index $components.desktop "whatsapp" }}
+    alacritty = {{ index $components.desktop "alacritty" }}
+
+  [data.components.system]
+    fonts = {{ index $components.system "fonts" }}
+    zsh_config = {{ index $components.system "zsh_config" }}
+    gnome_settings = {{ index $components.system "gnome_settings" }}
+    package_updates = {{ index $components.system "package_updates" }}
+
+  [data.components.security]
+    onepassword = {{ index $components.security "onepassword" }}
+    ssh_config = {{ index $components.security "ssh_config" }}
+    gpg_config = {{ index $components.security "gpg_config" }}
+
+{{/* Legacy compatibility */}}
 [data.onepass]
-  enabled = {{ not $devcontainer }}
+  enabled = {{ index $components.security "onepassword" }}
 [data.dropbox]
   enabled = {{ not $devcontainer }}
   symlinks-root = "/home/{{ .chezmoi.username }}/Dropbox/Machines/{{ .chezmoi.hostname }}"

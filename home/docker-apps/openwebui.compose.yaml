@@ -1,0 +1,12 @@
+name: openwebui
+services:
+  openwebui:
+    container_name: openwebui
+    image: ghcr.io/open-webui/open-webui:main
+    network_mode: host
+    # ports:
+    #   - '8080:8080'
+    volumes:
+      - ./volumes/open-webui/data:/app/backend/data
+    environment:
+      WEBUI_AUTH: false
