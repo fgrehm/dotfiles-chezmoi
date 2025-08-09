@@ -60,6 +60,10 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Setup Chezmoi
+        run: |
+          sh -c "$(curl -fsLS get.chezmoi.io)" -- -b /usr/local/bin
+
       - name: Run BATS tests
         run: |
           ./test/bats-setup.sh
