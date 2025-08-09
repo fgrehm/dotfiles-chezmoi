@@ -1,6 +1,7 @@
 # Chezmoi Testing Framework
 
-This directory contains the testing infrastructure for chezmakase, designed with a clean separation of concerns:
+This directory contains the testing infrastructure for chezmakase, designed with a clean separation of
+concerns:
 
 - **🧪 BATS Tests**: Fast, reliable unit and component testing
 - **🎮 Development Playground**: Interactive sandbox for development and debugging
@@ -10,6 +11,7 @@ This directory contains the testing infrastructure for chezmakase, designed with
 ### BATS Testing Framework
 
 Fast, lightweight testing using the Bash Automated Testing System (BATS). Perfect for:
+
 - Template validation
 - Script syntax checking
 - Configuration file validation
@@ -18,10 +20,11 @@ Fast, lightweight testing using the Bash Automated Testing System (BATS). Perfec
 ### Development Playground
 
 Interactive Docker-based environment for:
-- Manual testing and debugging
-- Template experimentation
-- Real container environment testing
-- Development workflow validation
+
+- **Interactive Development**: Get a shell in a containerized environment
+- **Template Testing**: Test templates with real container detection
+- **Integration Testing**: Test actual chezmoi operations
+- **Debugging**: Investigate issues in a controlled environment
 
 ## Quick Start
 
@@ -90,14 +93,6 @@ Interactive Docker-based environment for:
 - Conditional logic testing
 - Script template validation
 
-### Development Playground
-
-The playground provides a real container environment for:
-- **Interactive Development**: Get a shell in a containerized environment
-- **Template Testing**: Test templates with real container detection
-- **Integration Testing**: Test actual chezmoi operations
-- **Debugging**: Investigate issues in a controlled environment
-
 ## Configuration
 
 ### Test Configuration
@@ -123,6 +118,7 @@ The playground provides a real container environment for:
 4. Use BATS assertions: `assert_success`, `assert_output`, etc.
 
 Example:
+
 ```bash
 @test "my new feature works" {
     run my_command
@@ -134,6 +130,7 @@ Example:
 ### Using the Playground
 
 The playground is perfect for:
+
 - Testing new templates interactively
 - Debugging chezmoi apply issues
 - Experimenting with different configurations
@@ -144,6 +141,7 @@ The playground is perfect for:
 ### GitHub Actions
 
 The `.github/workflows/test.yml` workflow:
+
 - Runs BATS tests on every push/PR
 - Ensures code quality and template validity
 - Provides fast feedback on changes
@@ -157,18 +155,21 @@ The `.github/workflows/test.yml` workflow:
 ## Maintenance
 
 ### Updating BATS
+
 ```bash
 cd test/bats
 git pull origin main  # For each BATS library
 ```
 
 ### Rebuilding Playground
+
 ```bash
 docker rmi chezmoi-playground
 ./test/chezmoi-playground.sh start
 ```
 
 ### Cleaning Up
+
 ```bash
 # Clean up playground containers
 ./test/chezmoi-playground.sh cleanup
@@ -232,7 +233,7 @@ rm -rf test/bats/
 
 ## File Structure
 
-```
+```text
 test/
 ├── bats/                    # BATS framework and libraries
 ├── chezmoi-core.bats       # Core functionality tests
@@ -246,4 +247,5 @@ test/
 └── README.md               # This file
 ```
 
-This architecture provides the best of both worlds: fast, reliable automated testing with BATS, and a powerful development environment with the playground for interactive work.
+This architecture provides the best of both worlds: fast, reliable automated testing with BATS, and
+a powerful development environment with the playground for interactive work.
