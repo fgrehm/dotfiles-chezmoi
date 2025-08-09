@@ -41,10 +41,16 @@ jobs:
           chezmoi execute-template --init < home/.chezmoi.toml.tmpl
 
           # Test key script templates
-          find home/.chezmoiscripts -name "*.sh.tmpl" -exec chezmoi execute-template --init < {} \;
+          find home/.chezmoiscripts -name "*.sh.tmpl" -print0 | while IFS= read -r -d '' template; do
+            echo "Testing template: $template"
+            chezmoi execute-template --init < "$template" > /dev/null
+          done
 
-          # Test shell configuration templates
-          find home -name "*.tmpl" -exec chezmoi execute-template --init < {} \;
+          # Test shell configuration templates (excluding scripts)
+          find home -name "*.tmpl" -not -path "home/.chezmoiscripts/*" -print0 | while IFS= read -r -d '' template; do
+            echo "Testing template: $template"
+            chezmoi execute-template --init < "$template" > /dev/null
+          done
 
       - name: Validate configuration
         run: |
@@ -67,7 +73,8 @@ jobs:
 
       - name: Test playground image build
         run: |
-          # Test that playground Dockerfile can be built
-          # This ensures the playground environment is valid
-          docker build --file test/Dockerfile.playground --tag test-playground .
-          docker rmi test-playground
+          # Test playground script can create and build Dockerfile
+          cd test
+          ./chezmoi-playground.sh start
+          # Cleanup
+          ./chezmoi-playground.sh cleanup
