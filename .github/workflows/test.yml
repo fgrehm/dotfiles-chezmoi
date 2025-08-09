@@ -37,19 +37,22 @@ jobs:
 
       - name: Test template execution
         run: |
+          # Initialize chezmoi to load data files
+          chezmoi init --source "$GITHUB_WORKSPACE"
+          
           # Test main configuration template
-          chezmoi execute-template --init < home/.chezmoi.toml.tmpl
+          chezmoi execute-template < home/.chezmoi.toml.tmpl
 
           # Test key script templates
           find home/.chezmoiscripts -name "*.sh.tmpl" -print0 | while IFS= read -r -d '' template; do
             echo "Testing template: $template"
-            chezmoi execute-template --init < "$template" > /dev/null
+            chezmoi execute-template < "$template" > /dev/null
           done
 
           # Test shell configuration templates (excluding scripts)
           find home -name "*.tmpl" -not -path "home/.chezmoiscripts/*" -print0 | while IFS= read -r -d '' template; do
             echo "Testing template: $template"
-            chezmoi execute-template --init < "$template" > /dev/null
+            chezmoi execute-template < "$template" > /dev/null
           done
 
       - name: Validate configuration
