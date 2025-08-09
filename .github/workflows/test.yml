@@ -37,13 +37,22 @@ jobs:
 
       - name: Test template execution
         run: |
-          # Initialize chezmoi to load data files
+          # Create chezmoi config directory
+          mkdir -p ~/.config/chezmoi
+          
+          # Create config with default values for CI testing
+          cat > ~/.config/chezmoi/chezmoi.toml << 'EOF'
+          [data]
+            setupType = "basic"
+          EOF
+          
+          # Initialize chezmoi 
           chezmoi init --source "$GITHUB_WORKSPACE"
           
           # Test main configuration template
           chezmoi execute-template < home/.chezmoi.toml.tmpl
 
-          # Test key script templates
+          # Test key script templates (these depend on the main config)
           find home/.chezmoiscripts -name "*.sh.tmpl" -print0 | while IFS= read -r -d '' template; do
             echo "Testing template: $template"
             chezmoi execute-template < "$template" > /dev/null
