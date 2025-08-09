@@ -11,7 +11,7 @@
   - [x] 1.5 Verify core development tools work in devcontainer environment
 
 - [ ] 2. **Optional Components Configuration System**
-  - [ ] 2.1 Design configuration schema for major component categories
+  - [x] 2.1 Design configuration schema for major component categories
   - [ ] 2.2 Create `.chezmoi.toml.tmpl` with sensible defaults and user options
   - [ ] 2.3 Update installation scripts to check configuration before installing components
   - [ ] 2.4 Add configuration prompts to initial setup process
