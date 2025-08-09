@@ -2,7 +2,7 @@
 {{ $devcontainer := not (empty (stat "/var/devcontainer")) -}}
 
 {{/* User preferences - prompt for component selection */}}
-{{- $setupType := promptString "setupType" "basic" "Setup type (basic/minimal/developer)" -}}
+{{- $setupType := promptStringOnce . "setupType" "Setup type (basic/minimal/developer)" "basic" -}}
 
 {{/* Component configuration based on setup type and environment */}}
 {{- $components := dict -}}

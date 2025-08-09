@@ -150,14 +150,14 @@ chezmoi init                                # Initializes user's dotfiles
 
 ## Chezmoi Setup Type Configuration
 
-### Using promptString for Interactive Setup
+### Using promptStringOnce for Interactive Setup
 
 The repository supports different setup profiles (basic, minimal, developer) using chezmoi's 
-`promptString` template function. Here's how it works:
+`promptStringOnce` template function. Here's how it works:
 
 #### Template Implementation
 ```go
-{{- $setupType := promptString "setupType" "basic" "Setup type (basic/minimal/developer)" -}}
+{{- $setupType := promptStringOnce . "setupType" "Setup type (basic/minimal/developer)" "basic" -}}
 ```
 
 #### Usage Examples
@@ -181,9 +181,9 @@ chezmoi execute-template --init --promptString setupType=developer < home/.chezm
 #### Key Findings
 
 1. **`--data` flag doesn't work with `chezmoi init`** - this was our initial mistake
-2. **`promptString` is only available during init stage** - not in regular templates
-3. **Syntax**: `promptString "key" "default" "prompt message"`
-4. **Non-interactive**: Use `--promptString key=value` to bypass prompts
+2. **`promptStringOnce` is the correct function** - stores values and avoids repeated prompts
+3. **Syntax**: `promptStringOnce . "key" "prompt message" "default"`
+4. **Non-interactive**: Use `--promptString key=value` to bypass prompts  
 5. **Template location**: Must be in `home/.chezmoi.toml.tmpl` (source directory)
 
 #### CI Integration
