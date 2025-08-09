@@ -90,6 +90,8 @@ jobs:
           # Get the actual chezmoi source directory and change to it
           chezmoi_source=$(chezmoi source-path)
           echo "Chezmoi source directory: $chezmoi_source"
+          ls -lah /home/runner/.local/share/chezmoi || true
+          ls -lah ~/.config/chezmoi || true
           cd "$chezmoi_source"
 
           # Test main configuration template using chezmoi's template execution
