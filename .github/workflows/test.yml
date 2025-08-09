@@ -84,16 +84,15 @@ jobs:
       - name: Test template execution
         run: |
           set -x
-          pwd
-          ls -lah .
+          mkdir -p /home/runner/.local/share
+          ln -s "$GITHUB_WORKSPACE" /home/runner/.local/share/chezmoi
+
           # Initialize chezmoi from source (this loads data files automatically)
-          chezmoi init --verbose --source "$GITHUB_WORKSPACE" --promptString "Setup type (basic/minimal/developer)"=basic
+          chezmoi init --verbose --promptString "Setup type (basic/minimal/developer)"=basic
 
           # Get the actual chezmoi source directory and change to it
           chezmoi_source=$(chezmoi source-path)
           echo "Chezmoi source directory: $chezmoi_source"
-          ls -lah /home/runner/.local/share/chezmoi || true
-          ls -lah ~/.config/chezmoi || true
           cd "$chezmoi_source"
 
           # Test main configuration template using chezmoi's template execution
