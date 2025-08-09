@@ -55,7 +55,13 @@
 
 ## Radar
 
-- What is the best framework for shell testing these days? Anything that helps interactions with docker / chezmakase?
+- ✅ What is the best framework for shell testing these days? Anything that helps interactions with docker / chezmakase?
+  - **Implemented BATS (Bash Automated Testing System)** - Industry standard for shell testing
+  - **Docker integration** - Works seamlessly with container environments
+  - **Chezmoi compatibility** - Tests templates, scripts, and configuration
+  - **Comprehensive test suites** - Core, installers, configurations, and templates
+  - **Keeps existing Docker tests** - `./test/simulate-devcontainer.sh` for container-specific testing
+  - **CI/CD ready** - GitHub Actions workflow for automated testing
 - **User Customization Strategy**: How should users fork/customize chezmakase? Consider:
   - Template repository approach vs fork-and-customize
   - Namespace/branding (chezmakase framework vs user's dotfiles-chezmakase)

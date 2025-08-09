@@ -94,3 +94,4 @@ chezmoi add <file>
 ## Git Commit Guidelines
 
 - All commits made by Claude Code should end with: `🤖 Generated with Claude Code`
+- NEVER include "Co-Authored-By: Claude <noreply@anthropic.com>" in commit messages
