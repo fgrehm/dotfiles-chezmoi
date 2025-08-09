@@ -37,22 +37,13 @@ jobs:
 
       - name: Test template execution
         run: |
-          # Create chezmoi config directory
-          mkdir -p ~/.config/chezmoi
-          
-          # Create config with default values for CI testing
-          cat > ~/.config/chezmoi/chezmoi.toml << 'EOF'
-          [data]
-            setupType = "basic"
-          EOF
-          
-          # Initialize chezmoi 
-          chezmoi init --source "$GITHUB_WORKSPACE"
+          # Initialize chezmoi from source (this loads data files automatically)
+          chezmoi init --source "$GITHUB_WORKSPACE" --data setupType=basic
           
           # Test main configuration template
           chezmoi execute-template < home/.chezmoi.toml.tmpl
 
-          # Test key script templates (these depend on the main config)
+          # Test key script templates (these depend on the main config and data files)
           find home/.chezmoiscripts -name "*.sh.tmpl" -print0 | while IFS= read -r -d '' template; do
             echo "Testing template: $template"
             chezmoi execute-template < "$template" > /dev/null
@@ -66,10 +57,10 @@ jobs:
 
       - name: Validate configuration
         run: |
-          # Test chezmoi init from source
+          # Test chezmoi init from source with setupType
           temp_dir=$(mktemp -d)
           cd "$temp_dir"
-          chezmoi init --source "$GITHUB_WORKSPACE"
+          chezmoi init --source "$GITHUB_WORKSPACE" --data setupType=basic
           cd "$GITHUB_WORKSPACE"
           rm -rf "$temp_dir"
 
