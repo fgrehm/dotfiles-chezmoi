@@ -1,0 +1,11 @@
+# Cursor runtime files
+logs/
+User/workspaceStorage/
+User/globalStorage/
+User/History/
+User/snippets/
+CachedExtensions/
+extensions/
+.vscode-test
+*.vsix
+*.log
