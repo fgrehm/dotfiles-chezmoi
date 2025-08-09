@@ -13,6 +13,7 @@ teardown() {
 
 @test "chezmoi configuration files exist" {
     assert_file_exist "home/.chezmoi.toml.tmpl"
+    assert_file_exist "home/.chezmoiscripts/00-bootstrap/run_once_upgrade.sh.tmpl"
 }
 
 @test "shell configuration files exist" {

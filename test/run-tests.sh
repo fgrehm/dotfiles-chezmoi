@@ -36,12 +36,12 @@ check_bats() {
 run_test_suite() {
     local suite="$1"
     local test_file="$REPO_ROOT/test/${suite}.bats"
-    
+
     if [ ! -f "$test_file" ]; then
         error "Test suite not found: $test_file"
         return 1
     fi
-    
+
     log "Running $suite tests..."
     cd "$REPO_ROOT"
     "$BATS_BIN" "$test_file"
@@ -67,12 +67,12 @@ USAGE_EOF
 
 main() {
     check_bats
-    
+
     case "${1:-all}" in
         "all")
             log "Running all test suites..."
             run_test_suite "chezmoi-core"
-            run_test_suite "chezmoi-templates" 
+            run_test_suite "chezmoi-templates"
             run_test_suite "installers"
             run_test_suite "configurations"
             success "All tests completed!"
