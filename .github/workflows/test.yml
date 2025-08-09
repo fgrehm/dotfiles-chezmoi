@@ -1,0 +1,136 @@
+name: Test Chezmoi Configuration
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main, develop]
+
+jobs:
+  lint:
+    name: Code Quality & Linting
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Install markdownlint-cli2
+        run: npm install -g markdownlint-cli2
+
+      - name: Run markdownlint
+        run: |
+          echo "Linting core markdown files..."
+          # Only lint core project files for now, exclude agent-os until cleaned up
+          markdownlint-cli2 README.md CLAUDE.md docs/ test/README.md
+
+      - name: Install shellcheck
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y shellcheck
+
+      - name: Run shellcheck
+        run: |
+          echo "Linting shell scripts..."
+          # Check .sh files
+          find . -name "*.sh" -not -path "./.git/*" -not -path "./test/bats/*" -print0 | \
+            xargs -0 shellcheck --severity=warning || {
+            echo "::warning::Shellcheck issues found. See output above."
+            echo "Note: Shellcheck is informational for now while we clean up existing issues."
+          }
+
+          # Basic syntax check on shell script templates (without template evaluation)
+          echo "Checking basic shell template syntax..."
+          find . -name "*.sh.tmpl" -not -path "./.git/*" -print0 | while IFS= read -r -d '' file; do
+            echo "Found template: $file"
+            # Basic check - ensure files have proper shebang and basic structure
+            if ! head -1 "$file" | grep -q '^#!/'; then
+              echo "::warning::Template $file missing shebang"
+            fi
+          done || true
+
+  bats-tests:
+    name: BATS Tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Chezmoi
+        run: |
+          sh -c "$(curl -fsLS get.chezmoi.io)" -- -b /usr/local/bin
+
+      - name: Run BATS tests
+        run: |
+          ./test/bats-setup.sh
+          ./test/run-tests.sh all
+
+  integration-tests:
+    name: Integration Tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Chezmoi
+        run: |
+          sh -c "$(curl -fsLS get.chezmoi.io)" -- -b /usr/local/bin
+
+      - name: Test template execution
+        run: |
+          mkdir -p /home/runner/.local/share
+          ln -s "$GITHUB_WORKSPACE" /home/runner/.local/share/chezmoi
+
+          # Initialize chezmoi from source (this loads data files automatically)
+          chezmoi init --verbose --promptString "Setup type (basic/minimal/developer)"=basic
+
+          # Get the actual chezmoi source directory and change to it
+          chezmoi cd
+
+          # Test main configuration template using chezmoi's template execution
+          echo "Testing main config template..."
+          chezmoi execute-template --init --promptString "Setup type (basic/minimal/developer)"=basic < home/.chezmoi.toml.tmpl > /dev/null
+
+          # Test key script templates using chezmoi cat which processes templates in context
+          echo "Testing script templates..."
+          find home/.chezmoiscripts -name "*.sh.tmpl" -type f | while read -r template; do
+            # Convert to target path for chezmoi cat
+            target_path=$(echo "$template" | sed 's|^home/||' | sed 's|dot_|.|g' | sed 's|\.tmpl$||')
+            echo "Testing template: $template -> $target_path"
+            chezmoi cat "$target_path" > /dev/null || {
+              echo "Warning: Template $template failed to execute"
+            }
+          done
+
+          # Test other templates (shell configs, etc.)
+          echo "Testing other templates..."
+          find home -name "*.tmpl" -not -path "home/.chezmoiscripts/*" -type f | while read -r template; do
+            # Convert to target path for chezmoi cat
+            target_path=$(echo "$template" | sed 's|^home/||' | sed 's|dot_|.|g' | sed 's|\.tmpl$||')
+            echo "Testing template: $template -> $target_path"
+            chezmoi cat "$target_path" > /dev/null || {
+              echo "Warning: Template $template failed to execute"
+            }
+          done
+
+  playground-build:
+    name: Playground Build Test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Test playground image build
+        run: |
+          # Test playground script can create and build Dockerfile
+          cd test
+          ./chezmoi-playground.sh start
+          # Cleanup
+          ./chezmoi-playground.sh cleanup

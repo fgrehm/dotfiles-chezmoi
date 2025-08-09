@@ -1,0 +1,14 @@
+name: ollama
+services:
+  ollama:
+    image: ollama/ollama:latest
+    network_mode: host
+    # ports:
+    #   - '11434:11434'
+    volumes:
+      - ./volumes/ollama:/root/.ollama
+    environment:
+      OLLAMA_HOST: 0.0.0.0
+    container_name: ollama
+    tty: true
+    restart: unless-stopped

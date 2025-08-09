@@ -1,0 +1,60 @@
+---
+title: Chezmoi Dotfiles Management
+description: Guidelines for working with this chezmoi-managed dotfiles repository
+tags: [chezmoi, dotfiles, system-config]
+---
+
+# Chezmoi Dotfiles Repository
+
+This is a chezmoi-managed dotfiles repository that manages system configuration, application installations, and development environment setup across Linux systems.
+
+## Key Commands
+
+### Chezmoi Operations
+
+```bash
+# Apply changes after modification
+chezmoi apply
+
+# Edit a managed file
+chezmoi edit <file>
+
+# See what changes would be applied
+chezmoi diff
+
+# Add a new file to be managed
+chezmoi add <file>
+```
+
+### Development Utilities
+
+```bash
+# Compare dconf settings (shows system configuration changes)
+./utils/dconf-diff.sh
+```
+
+## Repository Structure
+
+- `home/` - Dotfiles and configurations (symlinked/copied to user's home directory)
+- `configs/` - Application-specific configurations (nvim, cursor, vscode)
+- `home/.chezmoiscripts/` - Installation and configuration scripts in phases:
+  - `00-bootstrap/` - System package installation and updates
+  - `01-installers/` - Application-specific installers
+  - `02-configurations/` - System and application configuration scripts
+
+## Chezmoi Conventions
+
+- Files ending in `.tmpl` are chezmoi templates supporting Go templating
+- `dot_` prefixes become `.` in the target system (e.g., `dot_bashrc` → `.bashrc`)
+- Scripts with `run_once_` prefix execute once during installation
+- Scripts with `run_onchange_` prefix re-run when content changes
+- Template files allow conditional execution: `{{ if .virt.container }}`
+- Access chezmoi variables: `{{ .chezmoi.username }}`, `{{ .chezmoi.workingTree }}`
+
+## Development Guidelines
+
+- Test changes with `chezmoi diff` before applying
+- All shell scripts must start with `set -eo pipefail`
+- Follow existing patterns and conventions in the codebase
+- Scripts execute in numerical/alphabetical order by phase
+- Container environments automatically skip certain installations

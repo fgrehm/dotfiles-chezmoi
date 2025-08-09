@@ -1,3 +1,4 @@
+{{ if .components.desktop.notion -}}
 [Desktop Entry]
 Version=1.0
 Name=Notion
@@ -9,3 +10,4 @@ Icon={{ .chezmoi.workingTree }}/assets/icons/notion.png
 Categories=GTK;
 MimeType=text/html;text/xml;application/xhtml_xml;
 StartupNotify=true
+{{ end -}}

@@ -1,1 +1,5 @@
 tmp/
+
+# BATS testing framework
+test/bats/
+test/test-config.toml

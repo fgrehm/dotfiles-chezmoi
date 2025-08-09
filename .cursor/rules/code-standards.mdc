@@ -1,0 +1,42 @@
+---
+title: Code Standards and Guidelines
+description: Coding standards, formatting rules, and development practices for this repository
+tags: [standards, formatting, development]
+---
+
+# Code Standards
+
+## General Principles
+
+- NEVER create files unless absolutely necessary for the goal
+- ALWAYS prefer editing existing files over creating new ones
+- NEVER proactively create documentation files (*.md) unless explicitly requested
+- Follow existing patterns and conventions found in the codebase
+
+## Shell Script Standards
+
+- All scripts must start with `set -eo pipefail`
+- Use proper error handling throughout scripts
+- Include meaningful comments for complex operations
+- Follow the existing script naming conventions
+
+## Markdown Standards
+
+- Maximum 100 characters per line (configured in `.markdownlint.json`)
+- All markdown files must end with exactly one newline character (MD047)
+- Wrap lines at 100 characters for readability and linting compliance
+
+## File Organization
+
+- Installation scripts use phase-based organization:
+  - `00-bootstrap/` - System-level setup
+  - `01-installers/` - Application installations
+  - `02-configurations/` - Configuration application
+- Configuration files in `configs/` are symlinked to avoid duplication
+- Template files (`.tmpl`) support conditional logic based on system detection
+
+## Testing and Validation
+
+- Use `chezmoi diff` to preview changes before applying
+- Test installation scripts in isolated environments when possible
+- Validate template syntax before committing changes

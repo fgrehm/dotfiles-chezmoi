@@ -1,0 +1,15 @@
+#!/bin/bash
+# vi: ft=bash
+{{ if .virt.container }}exit 0{{ end }}
+
+set -eo pipefail
+
+if $(which nvm >/dev/null); then
+  echo 'NVM already installed, skipping'
+  exit 0
+fi
+
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | PROFILE=/dev/null bash
+export NVM_DIR="${HOME}/.nvm"
+\. "${NVM_DIR}/nvm.sh"
+nvm install 22

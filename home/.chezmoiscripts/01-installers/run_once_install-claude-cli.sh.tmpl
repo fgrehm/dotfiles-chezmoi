@@ -1,0 +1,16 @@
+#!/bin/bash
+# vi: ft=bash
+{{ if not .components.development.claude_cli }}exit 0{{ end }}
+
+set -eo pipefail
+
+# Install Claude Code CLI
+# Based on https://github.com/anthropics/anthropic-sdk-python
+
+if $(type claude >/dev/null 2>&1); then
+  echo "Claude CLI already installed"
+  exit 0
+fi
+
+npm install -g @anthropic-ai/claude-code
+echo "Claude CLI installed successfully"

@@ -1,5 +1,6 @@
 #!/bin/bash
 # vi: ft=bash
+{{ if not .components.development.docker }}exit 0{{ end }}
 {{ if .virt.container }}exit 0{{ end }}
 
 set -eo pipefail

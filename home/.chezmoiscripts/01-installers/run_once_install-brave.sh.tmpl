@@ -1,8 +1,11 @@
 #!/bin/bash
 # vi: ft=bash
+{{ if not .components.browsers.brave }}exit 0{{ end }}
 {{ if .virt.container }}exit 0{{ end }}
 
 set -eo pipefail
+
+# TODO: Update if already installed
 
 # https://github.com/basecamp/omakub/blob/master/install/desktop/optional/app-brave.sh
 sudo curl -fsSLo /usr/share/keyrings/brave-browser-archive-keyring.gpg https://brave-browser-apt-release.s3.brave.com/brave-browser-archive-keyring.gpg
