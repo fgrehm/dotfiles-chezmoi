@@ -109,3 +109,8 @@ fi
 for comp in ~/.zsh_completion.d/*.zsh ; do
   [ -f "$comp" ] && . $comp
 done
+
+# Shared "stuff"
+for shared in ~/.shell.d/*.sh ; do
+  [ -f "$shared" ] && . $shared
+done

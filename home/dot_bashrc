@@ -104,3 +104,8 @@ fi
 for comp in ~/.bash_completion.d/*.bash ; do
   [ -f "$comp" ] && . $comp
 done
+
+# Shared "stuff"
+for shared in ~/.shell.d/*.sh ; do
+  [ -f "$shared" ] && . $shared
+done
