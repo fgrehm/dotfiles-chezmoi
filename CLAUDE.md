@@ -148,6 +148,51 @@ chezmoi init                                # Initializes user's dotfiles
 - All commits made by Claude Code should end with: `🤖 Generated with Claude Code`
 - NEVER include "Co-Authored-By: Claude <noreply@anthropic.com>" in commit messages
 
+## Chezmoi Setup Type Configuration
+
+### Using promptString for Interactive Setup
+
+The repository supports different setup profiles (basic, minimal, developer) using chezmoi's 
+`promptString` template function. Here's how it works:
+
+#### Template Implementation
+```go
+{{- $setupType := promptString "setupType" "basic" "Setup type (basic/minimal/developer)" -}}
+```
+
+#### Usage Examples
+
+**Interactive mode** (prompts user):
+```bash
+chezmoi init --verbose --apply fgrehm/dotfiles-chezmoi
+# Prompts: "Setup type (basic/minimal/developer):" [basic]
+```
+
+**Non-interactive mode** (specify value):
+```bash
+chezmoi init --promptString setupType=developer --verbose --apply fgrehm/dotfiles-chezmoi
+```
+
+**Testing template execution**:
+```bash
+chezmoi execute-template --init --promptString setupType=developer < home/.chezmoi.toml.tmpl
+```
+
+#### Key Findings
+
+1. **`--data` flag doesn't work with `chezmoi init`** - this was our initial mistake
+2. **`promptString` is only available during init stage** - not in regular templates
+3. **Syntax**: `promptString "key" "default" "prompt message"`
+4. **Non-interactive**: Use `--promptString key=value` to bypass prompts
+5. **Template location**: Must be in `home/.chezmoi.toml.tmpl` (source directory)
+
+#### CI Integration
+
+Update GitHub Actions to use correct syntax:
+```yaml
+chezmoi init --source "$GITHUB_WORKSPACE" --promptString setupType=basic
+```
+
 ## Current Session Progress (2025-08-09)
 
 ### Completed Tasks

@@ -42,10 +42,10 @@ Specify your preferred profile during initialization:
 sh -c "$(wget -qO- get.chezmoi.io)" -- init --verbose --apply fgrehm/dotfiles-chezmoi
 
 # Minimal setup (lightweight for containers)
-sh -c "$(wget -qO- get.chezmoi.io)" -- init --verbose --apply --data setupType=minimal fgrehm/dotfiles-chezmoi
+sh -c "$(wget -qO- get.chezmoi.io)" -- init --verbose --apply --promptString setupType=minimal fgrehm/dotfiles-chezmoi
 
 # Developer setup (full environment)
-sh -c "$(wget -qO- get.chezmoi.io)" -- init --verbose --apply --data setupType=developer fgrehm/dotfiles-chezmoi
+sh -c "$(wget -qO- get.chezmoi.io)" -- init --verbose --apply --promptString setupType=developer fgrehm/dotfiles-chezmoi
 ```
 
 - **Basic**: Recommended defaults (Cursor, Neovim, Brave, development tools)

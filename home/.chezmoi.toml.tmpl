@@ -2,10 +2,7 @@
 {{ $devcontainer := not (empty (stat "/var/devcontainer")) -}}
 
 {{/* User preferences - prompt for component selection */}}
-{{- $setupType := "basic" -}}
-{{- if hasKey . "setupType" -}}
-  {{- $setupType = .setupType -}}
-{{- end -}}
+{{- $setupType := promptString "setupType" "basic" "Setup type (basic/minimal/developer)" -}}
 
 {{/* Component configuration based on setup type and environment */}}
 {{- $components := dict -}}
@@ -13,7 +10,7 @@
 {{/* Basic setup - recommended for most users */}}
 {{- if eq $setupType "basic" -}}
   {{- $components = dict 
-    "editors" (dict "cursor" true "nvim" true "vscode" false)
+    "editors" (dict "cursor" true "nvim" true "vscode" true)
     "browsers" (dict "brave" true)
     "development" (dict "docker" true "nodejs" true "claude_cli" true "shellcheck" true "markdownlint" true "virtualbox" false)
     "services" (dict "ollama" false "openwebui" false "photoprism" false "auto_start" false)
