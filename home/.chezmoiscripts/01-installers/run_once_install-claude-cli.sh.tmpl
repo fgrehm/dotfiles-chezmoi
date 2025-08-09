@@ -1,0 +1,30 @@
+#!/bin/bash
+# vi: ft=bash
+{{ if not .components.development.claude_cli }}exit 0{{ end }}
+
+set -eo pipefail
+
+# Install Claude Code CLI
+# Based on https://github.com/anthropics/anthropic-sdk-python
+
+if $(type claude >/dev/null 2>&1); then
+  echo "Claude CLI already installed"
+  exit 0
+fi
+
+# Install via pip
+if ! $(type pip3 >/dev/null 2>&1); then
+  sudo apt update
+  sudo apt install -y python3-pip
+fi
+
+# Install Claude CLI
+pip3 install --user anthropic
+
+# Create symlink to make it available as 'claude'
+if [ ! -f ~/.local/bin/claude ]; then
+  mkdir -p ~/.local/bin
+  ln -sf ~/.local/bin/anthropic ~/.local/bin/claude
+fi
+
+echo "Claude CLI installed successfully" 
