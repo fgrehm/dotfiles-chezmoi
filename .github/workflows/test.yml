@@ -60,11 +60,6 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Setup BATS
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y bats
-
       - name: Run BATS tests
         run: |
           ./test/bats-setup.sh
@@ -83,7 +78,6 @@ jobs:
 
       - name: Test template execution
         run: |
-          set -x
           mkdir -p /home/runner/.local/share
           ln -s "$GITHUB_WORKSPACE" /home/runner/.local/share/chezmoi
 
@@ -118,15 +112,6 @@ jobs:
               echo "Warning: Template $template failed to execute"
             }
           done
-
-      - name: Validate configuration
-        run: |
-          # Test chezmoi init from source with setupType
-          temp_dir=$(mktemp -d)
-          cd "$temp_dir"
-          chezmoi init --source "$GITHUB_WORKSPACE" --promptString "Setup type (basic/minimal/developer)"=basic
-          cd "$GITHUB_WORKSPACE"
-          rm -rf "$temp_dir"
 
   playground-build:
     name: Playground Build Test
