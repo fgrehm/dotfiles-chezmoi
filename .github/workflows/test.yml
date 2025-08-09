@@ -7,6 +7,55 @@ on:
     branches: [ main, develop ]
 
 jobs:
+  lint:
+    name: Code Quality & Linting
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install markdownlint-cli2
+        run: npm install -g markdownlint-cli2
+
+      - name: Run markdownlint
+        run: |
+          echo "Linting core markdown files..."
+          # Only lint core project files for now, exclude agent-os until cleaned up
+          markdownlint-cli2 README.md CLAUDE.md docs/ test/README.md configs/ || {
+            echo "::warning::Markdown linting issues found. See output above."
+            echo "Note: Linting is informational for now while we clean up existing issues."
+          }
+
+      - name: Install shellcheck
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y shellcheck
+
+      - name: Run shellcheck
+        run: |
+          echo "Linting shell scripts..."
+          # Check .sh files
+          find . -name "*.sh" -not -path "./.git/*" -not -path "./test/bats/*" -print0 | \
+            xargs -0 shellcheck --severity=warning || {
+            echo "::warning::Shellcheck issues found. See output above."
+            echo "Note: Shellcheck is informational for now while we clean up existing issues."
+          }
+          
+          # Basic syntax check on shell script templates (without template evaluation)
+          echo "Checking basic shell template syntax..."
+          find . -name "*.sh.tmpl" -not -path "./.git/*" -print0 | while IFS= read -r -d '' file; do
+            echo "Found template: $file"
+            # Basic check - ensure files have proper shebang and basic structure
+            if ! head -1 "$file" | grep -q '^#!/'; then
+              echo "::warning::Template $file missing shebang"
+            fi
+          done || true
+
   bats-tests:
     name: BATS Tests
     runs-on: ubuntu-latest
