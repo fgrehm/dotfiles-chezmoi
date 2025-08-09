@@ -2,4 +2,7 @@
 
 set -eo pipefail
 
+# curl -H 'Content-Type: application/json' -H 'Authorization: Bearer cowvFV-RiywAu-xITrsl-57R5lp' http://localhost:2342/api/v1/photos?count=1 | jq '.'
+# curl -H 'Content-Type: application/json' -H 'Authorization: Bearer cowvFV-RiywAu-xITrsl-57R5lp' 'http://localhost:2342/api/v1/photos?order=oldest&count=1&offset=0&merged=true&public=true&quality=0&review=true' | jq '.[]' #  | {uid: .UID, w: .Width, h: .Height}'
+
 # docker compose exec -ti .... -f ~/photoprism.compose.yaml
