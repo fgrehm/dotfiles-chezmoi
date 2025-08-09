@@ -84,6 +84,8 @@ jobs:
       - name: Test template execution
         run: |
           set -x
+          pwd
+          ls -lah .
           # Initialize chezmoi from source (this loads data files automatically)
           chezmoi init --verbose --source "$GITHUB_WORKSPACE" --promptString "Setup type (basic/minimal/developer)"=basic
 
