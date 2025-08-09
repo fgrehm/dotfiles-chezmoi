@@ -2,7 +2,10 @@
 {{ $devcontainer := not (empty (stat "/var/devcontainer")) -}}
 
 {{/* User preferences - prompt for component selection */}}
-{{- $setupType := promptChoiceOnce . "setupType" "Choose setup type" (list "basic" "minimal" "developer" "custom") "basic" -}}
+{{- $setupType := "basic" -}}
+{{- if hasKey . "setupType" -}}
+  {{- $setupType = .setupType -}}
+{{- end -}}
 
 {{/* Component configuration based on setup type and environment */}}
 {{- $components := dict -}}
@@ -40,47 +43,16 @@
     "system" (dict "fonts" true "zsh_config" true "gnome_settings" true "package_updates" true)
     "security" (dict "onepassword" true "ssh_config" true "gpg_config" true)
   -}}
-{{/* Custom setup - prompt for each component */}}
+{{/* Custom setup - fallback to basic if no prompts available */}}
 {{- else -}}
   {{- $components = dict
-    "editors" (dict 
-      "cursor" (promptBoolOnce . "cursor" "Install Cursor IDE (AI-powered)" true)
-      "nvim" (promptBoolOnce . "nvim" "Install Neovim with LazyVim" true)
-      "vscode" (promptBoolOnce . "vscode" "Install VS Code" false)
-    )
-    "browsers" (dict
-      "brave" (promptBoolOnce . "brave" "Install Brave browser" true)
-    )
-    "development" (dict
-      "docker" (promptBoolOnce . "docker" "Install Docker" true)
-      "nodejs" (promptBoolOnce . "nodejs" "Install Node.js via NVM" true)
-      "claude_cli" (promptBoolOnce . "claude_cli" "Install Claude Code CLI" true)
-      "shellcheck" (promptBoolOnce . "shellcheck" "Install ShellCheck for bash linting" true)
-      "markdownlint" (promptBoolOnce . "markdownlint" "Install markdown linting tools" true)
-      "virtualbox" (promptBoolOnce . "virtualbox" "Install VirtualBox (bare metal only)" false)
-    )
-    "services" (dict
-      "ollama" (promptBoolOnce . "ollama" "Install Ollama LLM server" false)
-      "openwebui" (promptBoolOnce . "openwebui" "Install Open WebUI for Ollama" false)
-      "photoprism" (promptBoolOnce . "photoprism" "Install PhotoPrism photo manager" false)
-      "auto_start" (promptBoolOnce . "auto_start" "Auto-start Docker services" false)
-    )
-    "desktop" (dict
-      "notion" (promptBoolOnce . "notion" "Create Notion web app" true)
-      "whatsapp" (promptBoolOnce . "whatsapp" "Create WhatsApp web app" true)
-      "alacritty" (promptBoolOnce . "alacritty" "Install Alacritty terminal" false)
-    )
-    "system" (dict
-      "fonts" true
-      "zsh_config" true
-      "gnome_settings" (promptBoolOnce . "gnome_settings" "Configure GNOME desktop settings" true)
-      "package_updates" true
-    )
-    "security" (dict
-      "onepassword" (promptBoolOnce . "onepassword" "Install 1Password" true)
-      "ssh_config" true
-      "gpg_config" (promptBoolOnce . "gpg_config" "Configure GPG" false)
-    )
+    "editors" (dict "cursor" true "nvim" true "vscode" false)
+    "browsers" (dict "brave" true)
+    "development" (dict "docker" true "nodejs" true "claude_cli" true "shellcheck" true "markdownlint" true "virtualbox" false)
+    "services" (dict "ollama" false "openwebui" false "photoprism" false "auto_start" false)
+    "desktop" (dict "notion" true "whatsapp" true "alacritty" false) 
+    "system" (dict "fonts" true "zsh_config" true "gnome_settings" true "package_updates" true)
+    "security" (dict "onepassword" true "ssh_config" true "gpg_config" false)
   -}}
 {{- end -}}
 

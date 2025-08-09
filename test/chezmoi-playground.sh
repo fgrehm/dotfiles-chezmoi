@@ -107,10 +107,14 @@ RUN useradd -m -s /bin/bash vscode && \
 # Install chezmoi
 RUN sh -c "$(curl -fsLS get.chezmoi.io)" -- -b /usr/local/bin
 
-# Install additional development tools
-RUN pip3 install --no-cache-dir \
-    yamllint \
-    shellcheck
+# Install shellcheck from GitHub releases
+RUN curl -fsSL https://github.com/koalaman/shellcheck/releases/download/stable/shellcheck-stable.linux.x86_64.tar.xz | \
+    tar -xJf - && \
+    mv shellcheck-stable/shellcheck /usr/local/bin/ && \
+    rm -rf shellcheck-stable
+
+# Install additional development tools via pip
+RUN pip3 install --no-cache-dir yamllint
 
 # Set up working directory
 WORKDIR /workspace
