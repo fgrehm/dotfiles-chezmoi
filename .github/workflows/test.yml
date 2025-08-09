@@ -83,9 +83,10 @@ jobs:
 
       - name: Test template execution
         run: |
+          set -x
           # Initialize chezmoi from source (this loads data files automatically)
           chezmoi init --source "$GITHUB_WORKSPACE" --promptString "Setup type (basic/minimal/developer)"=basic
-          
+
           # Get the actual chezmoi source directory and change to it
           chezmoi_source=$(chezmoi source-path)
           echo "Chezmoi source directory: $chezmoi_source"
@@ -109,7 +110,7 @@ jobs:
           # Test other templates (shell configs, etc.)
           echo "Testing other templates..."
           find home -name "*.tmpl" -not -path "home/.chezmoiscripts/*" -type f | while read -r template; do
-            # Convert to target path for chezmoi cat  
+            # Convert to target path for chezmoi cat
             target_path=$(echo "$template" | sed 's|^home/||' | sed 's|dot_|.|g' | sed 's|\.tmpl$||')
             echo "Testing template: $template -> $target_path"
             chezmoi cat "$target_path" > /dev/null || {
