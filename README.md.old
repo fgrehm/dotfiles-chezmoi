@@ -1,0 +1,31 @@
+# dotfiles-chezmoi
+
+My dotfiles powered by [chezmoi](https://www.chezmoi.io).
+
+## Setup
+
+```bash
+sh -c "$(wget -qO- get.chezmoi.io)" -- init --verbose --apply fgrehm/dotfiles-chezmoi
+```
+
+TODO: Install claude code CLI
+
+Figure out how to get notion / whatsapp "apps" to not be created on containers
+
+Encrypted backup for brave
+~/.config/BraveSoftware/Brave-Browser/Default/Bookmarks
+~/.config/BraveSoftware/Brave-Browser/Default/Preferences
+TODO: Backup the wallet settings thingy
+
+Install markdown linter (markdownlint-cli2), shellcheck and maybe more
+
+Increase alacrity font size
+Make alacrity the default terminal
+
+<https://nodejs.org/en/download/>
+
+Check if we can automaticallly install vim plugin for ex
+
+code --install-extension DavidAnson.vscode-markdownlint
+
+figure out a way to tell nvim that .*.tmpl is a mix of `*` and go tmpl
