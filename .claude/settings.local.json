@@ -12,7 +12,8 @@
       "Bash(cp:*)",
       "Bash(git add:*)",
       "Bash(./test/run-tests.sh:*)",
-      "Bash(cat:*)"
+      "Bash(cat:*)",
+      "Bash(npx markdownlint-cli2:*)"
     ],
     "deny": []
   }

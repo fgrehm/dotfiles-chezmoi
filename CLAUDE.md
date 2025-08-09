@@ -98,6 +98,45 @@ chezmoi add <file>
 - All installation scripts include error handling with `set -eo pipefail`
 - Container environments are detected and skip certain installations automatically
 
+## Safety Guidelines for Claude Code
+
+When working with this chezmoi repository, follow these safety practices:
+
+### Avoid Disruptive Commands
+
+- **NEVER run `chezmoi init`, `chezmoi apply`, or `chezmoi execute-template --init`** without
+  explicit user permission as these modify user's actual dotfiles and system configuration
+- **Test templates safely**: Use temporary directories, test scripts, or analyze template syntax
+  without execution when possible
+- **Check command impact**: Before running any command that could modify files outside the repo,
+  ask the user or explain the potential impact
+- **Prefer read-only operations**: Use `chezmoi diff`, `chezmoi status`, template analysis, and
+  file reading over commands that make changes
+
+### Safe Testing Practices
+
+- Create temporary test scripts in the repo for analysis rather than executing templates directly
+- Use `grep`, `head`, `tail` to analyze template content without execution
+- When template testing is required, ensure proper data loading with
+  `chezmoi init --source <path> --data setupType=<type>` in isolated environments
+- Document any commands that could affect the user's system configuration
+
+### Examples of Safe vs Unsafe Commands
+
+**Safe (read-only analysis):**
+```bash
+grep -o '{{[^}]*}}' home/.chezmoi.toml.tmpl  # Analyze template variables
+head -10 home/.chezmoiscripts/script.tmpl    # Preview template content
+chezmoi diff                                 # Show what would change
+```
+
+**Unsafe (requires permission):**
+```bash
+chezmoi execute-template --init < template   # Modifies user settings
+chezmoi apply                               # Applies changes to system
+chezmoi init                                # Initializes user's dotfiles
+```
+
 ## Documentation Standards
 
 - **Markdown Line Length**: Maximum 100 characters per line (configured in `.markdownlint.json`)
