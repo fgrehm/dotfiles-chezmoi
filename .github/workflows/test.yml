@@ -85,9 +85,11 @@ jobs:
         run: |
           # Initialize chezmoi from source (this loads data files automatically)
           chezmoi init --source "$GITHUB_WORKSPACE" --data setupType=basic
-
-          # Change to chezmoi working directory where data files are loaded
-          cd ~/.local/share/chezmoi
+          
+          # Get the actual chezmoi source directory and change to it
+          chezmoi_source=$(chezmoi source-path)
+          echo "Chezmoi source directory: $chezmoi_source"
+          cd "$chezmoi_source"
 
           # Test main configuration template using chezmoi's template execution
           echo "Testing main config template..."
