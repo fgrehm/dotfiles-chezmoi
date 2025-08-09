@@ -1,0 +1,73 @@
+name: Test Chezmoi Configuration
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+
+jobs:
+  bats-tests:
+    name: BATS Tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup BATS
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y bats
+
+      - name: Run BATS tests
+        run: |
+          ./test/bats-setup.sh
+          ./test/run-tests.sh all
+
+  integration-tests:
+    name: Integration Tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Chezmoi
+        run: |
+          sh -c "$(curl -fsLS get.chezmoi.io)" -- -b /usr/local/bin
+
+      - name: Test template execution
+        run: |
+          # Test main configuration template
+          chezmoi execute-template --init < home/.chezmoi.toml.tmpl
+
+          # Test key script templates
+          find home/.chezmoiscripts -name "*.sh.tmpl" -exec chezmoi execute-template --init < {} \;
+
+          # Test shell configuration templates
+          find home -name "*.tmpl" -exec chezmoi execute-template --init < {} \;
+
+      - name: Validate configuration
+        run: |
+          # Test chezmoi init from source
+          temp_dir=$(mktemp -d)
+          cd "$temp_dir"
+          chezmoi init --source "$GITHUB_WORKSPACE"
+          cd "$GITHUB_WORKSPACE"
+          rm -rf "$temp_dir"
+
+  playground-build:
+    name: Playground Build Test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Test playground image build
+        run: |
+          # Test that playground Dockerfile can be built
+          # This ensures the playground environment is valid
+          docker build --file test/Dockerfile.playground --tag test-playground .
+          docker rmi test-playground
